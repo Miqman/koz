@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
+/* Quasar CSS - import setelah Tailwind */
+/* @import 'quasar/src/css/index.sass'; */
+@import 'quasar/dist/quasar.css';
+
+@import './base.css';
+@config "../../tailwind.config.js";
+@import 'tailwindcss';
+
+:root {
+  --background: #F4F4F5;
+  --blackMain: #09090B;
+  --secondaryMain: #E4EDFF;
+  --colorMain: #487BE3;
+  --borderMain: #e4e4e7;
+
+  /* background: var(--background); */
+}
+
+.dark {
+  --background: #111827;
+  --blackMain: #ffffff;
+  --secondaryMain: #62748e;
+  /* background: var(--background); */
+}
+body {
+  font-family: "Roboto Flex", sans-serif;
+}
+
+/* Custom theme variables untuk dark mode */
+@theme {
+  /* Light mode colors */
+  --color-background: var(--background);
+  --color-twPrimary: var(--colorMain);
+  --color-twSecondary: var(--secondaryMain);
+  --color-twBlack: var(--blackMain);
+  --color-twBlackSecondary: #71717B;
+  --color-twBorder: var(--borderMain);
+  --color-twGrayBlack: #62748e;
+  --color-twGreen: #00c951;
+  --color-twPurple: #8e51ff;
+  --color-twLightBlue: #00b8db;
+  --color-twOrange: #fe9a00;
+  --color-twRed: #ff2056;
+  --color-accent: #9c27b0;
+  --color-positive: #21ba45;
+  --color-negative: #c10015;
+  --color-info: #31ccec;
+  --color-warning: #f2c037;
+  --color-navbar: #ffffff;
+  --color-textPrimary: #2b7fff;
+  --color-textDialog: #09090b;
+
+  /* Background colors */
+  --color-bg-light: #fafafa;
+  --color-bg-dark: #111827;
+  --color-surface-light: #f9fafb;
+  --color-surface-dark: #1f2937;
+}
+
+.q-field--outlined .q-field__control {
+  border-radius: 8px;
+}
+.q-field--outlined .q-field__control::before {
+  border: 1px solid var(--color-twBorder);
+}
+.q-checkbox__bg {
+  border: 1.5px solid var(--color-twBorder);
+}
+.q-checkbox__inner--truthy .q-checkbox__bg {
+  background-color: var(--color-twPrimary);
+  border: 1.5px solid var(--color-twPrimary);
+}
+
+/* Custom Quasar component overrides untuk dark mode */
+.body--dark {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+.body--light .q-header {
+  background-color: var(--color-white);
+  border-color: var(--color-twBorder);
+  color: var(--color-black);
+}
+.body--dark .q-header {
+  background-color: var(--color-slate-800);
+  border-color: var(--color-twBorder);
+  color: var(--color-white);
+}
+
+.body--dark .q-drawer {
+  background-color: var(--color-slate-800);
+  border-color: #374151;
+}
+
+.body--dark .q-page-container {
+  background-color: var(--color-slate-900);
+}
+/* .q-layout__section--marginal {
+  background-color: var(--q-primary);
+  color: #fff;
+} */
+
+/* .body--dark .table-detail {
+  && .q-table--top,
+  thead tr:first-child th {
+    background-color: var(--color-gray-800);
+  }
+} */
+
+.my-custom-input .q-field__control {
+  background-color: #fffcf5;
+  border: 1px solid #cc5200;
+  color: #000;
+}
+
+.my-custom-select .q-field__control {
+  background-color: #fffcf5;
+  border: 1px solid #cc5200;
+  color: #000;
+}
+
+body.body--dark .my-custom-input .q-field__control,
+body.body--dark .my-custom-select .q-field__control {
+  background-color: #4b3d2a;
+  border: 1px solid #ffcc99;
+  color: #fff;
+}
+
+/* Smooth transitions untuk dark mode */
+* {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+/* Override Quasar components dengan Tailwind utilities */
+.q-btn {
+  @apply transition-all duration-200 hover:scale-102;
+}
+.shadow-btn {
+  @apply shadow-[0px_3px_10px_0px_rgba(0,0,0,0.10)];
+}
+.btn-login {
+  @apply w-[120px] bg-twPrimary shadow-[0px_3px_7px_0px_rgba(142,81,255,0.30)] rounded-sm text-white font-bold;
+}
+.btn-primary {
+  @apply rounded-lg !text-white font-semibold;
+  background: linear-gradient(270deg, #51a2ff -33.61%, #155dfc 142.62%);
+}
+.btn-drawer {
+  @apply rounded-lg text-twSecondary font-semibold;
+}
+.btn-drawer.active {
+  @apply text-white;
+  background: linear-gradient(270deg, #51a2ff -33.61%, #155dfc 142.62%);
+}
+.q-field__bottom {
+  @apply px-0;
+}
+
+.card {
+  @apply rounded-lg border border-(--color-twBorder) border-solid bg-white  dark:bg-bg-dark;
+}
+
+.q-input {
+  @apply transition-colors duration-200;
+}
+
+/* Dark mode specific overrides */
+.dark .q-card {
+  @apply bg-gray-800 text-white border-gray-700;
+}
+
+.dark .q-input .q-field__control {
+  @apply bg-gray-700 text-white;
+}
+
+.dark .q-input .q-field__label {
+  @apply text-gray-300;
+}
+
+/* Custom scrollbar untuk dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-full;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+.starlabel:after {
+  content: ' *';
+  color: red;
+}
+
+.cardHeaderTitle {
+  @apply border-b-[color:var(--color-twBorder)] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.10)] border-b border-solid bg-white dark:bg-bg-dark;
+}
+
+/* .my-table tr td {
+  color: var(--color-twGrayBlack) !important;
+}
+.body--dark .my-table tr th {
+  color: var(--color-textDarkPrimary);
+}
+.my-table tr th {
+  border-top: 1px solid var(--color-twBorder);
+}
+.q-table__top {
+  @apply px-0;
+} */
+
+.badge-green {
+  @apply text-twGreen bg-twGreen/10 px-2 py-1 rounded-sm;
+}
+.badge-red {
+  @apply text-twRed bg-twRed/10 px-2 py-1 rounded-sm;
+}
+.badge-primary {
+  @apply text-twPrimary bg-twPrimary/10 px-2 py-1 rounded-sm;
+}
+.badge-black {
+  @apply text-white bg-[#053345] px-2 py-1 rounded-sm;
+}
+.badge-secondary {
+  @apply text-twSecondary bg-twSecondary/10 px-2 py-1 rounded-sm;
+}
+.badge-orange {
+  @apply text-twOrange bg-twOrange/10 px-2 py-1 rounded-sm;
+}
+.badge-blue {
+  @apply text-[#2B7FFF] bg-[#2B7FFF]/10 px-2 py-1 rounded-sm;
+}
+
+.card-login {
+  @apply flex w-[412px] flex-col items-center gap-6 rounded shadow-[0px_3px_10px_0px_rgba(0,0,0,0.10)] px-6 py-8;
+  background: var(--Neutral-00, #fff);
+}
+.activeClass {
+  @apply rounded-lg !py-2.5 bg-twSecondary text-twPrimary font-bold;
+}
