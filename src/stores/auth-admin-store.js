@@ -28,7 +28,7 @@ function safeDecrypt() {
   }
 }
 
-export const useAuthAdminStore = defineStore('auth-royal', {
+export const useAuthAdminStore = defineStore('auth-koz', {
   state: () => ({
     token: null,
     user: null,
@@ -69,9 +69,7 @@ export const useAuthAdminStore = defineStore('auth-royal', {
     /** ✅ Login admin */
     async adminLogin(payload) {
       try {
-        // const res = await api.post('/api/v1/auth/login', payload, {
-        //   headers: { 'x-platform-type': 'WEB' },
-        // })
+        // const res = await api.post('/api/auth/login', payload)
 
         const { token, user } = payload //dummy
         // const { token, user } = res.data.data

@@ -91,7 +91,11 @@ export default {
           },
         }
         await this.adminLogin(payload)
-        this.$router.push('/pengajuan-wp').then(() => {
+        // await this.adminLogin({
+        //   email: this.login.email,
+        //   password: this.login.password,
+        // })
+        this.$router.push('/').then(() => {
           toast.success('Berhasil login!', {
             position: 'top-right',
           })

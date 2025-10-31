@@ -266,12 +266,10 @@ import { useRoute, useRouter } from 'vue-router'
 import DialogConfirm from '@/components/DialogConfirm.vue'
 // import { useAuthStore } from '@/stores/auth-store'
 import { useAuthAdminStore } from '@/stores/auth-admin-store'
-import { useDashboardStore } from '@/stores/dashbaord-store'
-import moment from 'moment'
+import { moment } from '@/utils/mixing'
 
 // const authStore = useAuthStore()
 const authStore = useAuthAdminStore()
-const dsbStore = useDashboardStore()
 
 const routeMain = useRoute()
 const $q = useQuasar()
@@ -494,147 +492,18 @@ const isSubmenuActive = (submenu) => {
 const logout = async () => {
   loadingLogout.value = true
 
-  // Stop auto refresh before logout
-  stopAutoRefresh()
-  document.removeEventListener('visibilitychange', handleVisibilityChange)
-
   await authStore.logout()
   router.push('/login')
   loadingLogout.value = false
 }
 
-// Payload untuk API
-const payloadDashboard = () => {
-  const payload = {
-    from: moment().startOf('month').format('YYYY-MM-DD'),
-    to: moment().endOf('month').format('YYYY-MM-DD'),
-  }
-  return payload
-}
-
-const getMusikLatest = () => {
-  // Hanya panggil API jika user sudah login
-  if (!adminInfo.value) {
-    console.log('User not logged in, skipping getMusikLatest...')
-    return
-  }
-
-  const payload = payloadDashboard()
-  dsbStore.getMusikLatestApi(payload.from, payload.to).then((res) => {
-    // console.log(res, 'data musik latest')
-    if (res.success) {
-      const newData = res.data || []
-
-      // Cek apakah ada lagu baru
-      if (previousMusikLatest.value.length > 0 && newData.length > 0) {
-        const newSongs = newData.filter(
-          (newSong) => !previousMusikLatest.value.some((oldSong) => oldSong.id === newSong.id),
-        )
-
-        // Tampilkan notifikasi untuk setiap lagu baru
-        newSongs.forEach((song) => {
-          $q.notify({
-            type: 'positive',
-            message: `Lagu baru diputar: ${song.judul_lagu} - ${song.nama_penyanyi}`,
-            position: 'top-right',
-            timeout: 5000,
-            icon: 'music_note',
-            // actions: [{ label: 'Tutup', color: 'white' }],
-          })
-        })
-      }
-
-      // Update data
-      dsbStore.dataMusikLatest = newData
-      previousMusikLatest.value = newData
-    }
-  })
-}
-
-// Auto refresh functions
-const startAutoRefresh = () => {
-  // Hanya start auto refresh jika user sudah login
-  if (!adminInfo.value) {
-    console.log('User not logged in, cannot start auto refresh...')
-    return
-  }
-
-  // Clear existing interval if any
-  if (autoRefreshInterval.value) {
-    clearInterval(autoRefreshInterval.value)
-  }
-
-  // Start new interval - refresh every 30 seconds
-  autoRefreshInterval.value = setInterval(() => {
-    if (isPageVisible.value && adminInfo.value) {
-      console.log('Auto refreshing musik latest...')
-      getMusikLatest()
-    }
-  }, 30000) // 30 seconds = 30000ms
-}
-
-const stopAutoRefresh = () => {
-  if (autoRefreshInterval.value) {
-    clearInterval(autoRefreshInterval.value)
-    autoRefreshInterval.value = null
-  }
-}
-
-const handleVisibilityChange = () => {
-  isPageVisible.value = !document.hidden
-
-  if (isPageVisible.value) {
-    // Page became visible, start auto refresh
-    startAutoRefresh()
-    // Also refresh data immediately when page becomes visible
-    getMusikLatest()
-  } else {
-    // Page became hidden, stop auto refresh
-    stopAutoRefresh()
-  }
-}
-
-// Watch untuk status login
-watch(
-  () => adminInfo.value,
-  (newValue, oldValue) => {
-    // Jika user logout (adminInfo menjadi null/undefined)
-    if (!newValue && oldValue) {
-      console.log('User logged out, stopping auto refresh...')
-      stopAutoRefresh()
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-    }
-    // Jika user login (adminInfo ada value)
-    else if (newValue && !oldValue) {
-      console.log('User logged in, starting auto refresh...')
-      getMusikLatest()
-      startAutoRefresh()
-      document.addEventListener('visibilitychange', handleVisibilityChange)
-    }
-  },
-  { immediate: true },
-)
 
 onMounted(() => {
-  // Hanya start auto refresh jika user sudah login
-  if (adminInfo.value) {
-    console.log('User already logged in, starting auto refresh...')
-    // Load data pertama kali
-    getMusikLatest()
 
-    // Start auto refresh
-    startAutoRefresh()
-
-    // Add visibility change listener
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-  }
 })
 
 onUnmounted(() => {
-  // Clean up interval and event listener
-  console.log('Component unmounted, cleaning up auto refresh...')
-  stopAutoRefresh()
-  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  
 })
 </script>
 

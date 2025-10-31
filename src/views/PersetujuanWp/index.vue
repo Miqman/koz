@@ -3,8 +3,10 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { moment } from '@/utils/mixing'
 import { formatDate } from '@/utils/formatDate'
 import DialogConfirm from '@/components/DialogConfirm.vue'
+import { usePersetujuanWpStore } from '@/stores/persetujuan-wp-store'
 
 // const $q = useQuasar()
+const persetujuanWpStore = usePersetujuanWpStore()
 
 const columns = [
   {
@@ -252,6 +254,32 @@ const filteredData = computed(() => {
   )
 })
 
+
+const getListPersetujuanWp = () => {
+  loading.value = true
+  persetujuanWpStore.getListPersetujuanWpApi().then((res) => {
+    if (res.success) {
+      reqWp.value = res.data || []
+    }
+  })
+  loading.value = false
+}
+
+const approvalPersetujuanWp = () => {
+  const payload = {
+    is_active: 0 //0 atau 1
+  }
+  loading.value = true
+  persetujuanWpStore.approvalPersetujuanWpApi(id, payload).then((res) => {
+    if (res.success) {
+      toast.success('Persetujuan berhasil')
+      getListPersetujuanWp()
+    } else {
+      toast.error('Persetujuan gagal')
+    }
+    loading.value = false
+  })
+}
 
 onMounted(() => {
   // updateData()
